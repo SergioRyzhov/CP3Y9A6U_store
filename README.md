@@ -12,11 +12,15 @@ docker-compose -f docker-compose.yaml up -d
 
 #### to stop
 ```
-docker-compose -f docker-compose.yaml down
+docker-compose -f docker-compose.yaml down -v
+```
+#### apply migrations
+```
+docker exec -it app python app/manage.py migrate
 ```
 #### to init data
 ```
-python manage.py loaddata fixtures.json
+docker exec -it app python app/manage.py loaddata fixtures.json
 ```
 ***
 
