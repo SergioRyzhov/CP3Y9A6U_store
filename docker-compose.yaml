@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+
+    app:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      environment:
+        - SQL_HOST=db
+        - SQL_PORT=5432
+      container_name: app
+      command: python app/manage.py runserver 0.0.0.0:8000
+      ports:
+        - "8000:8000"
+      volumes:
+        - .:/app
+      depends_on:
+        - db
+
+    db:
+      image: postgres:latest
+      environment:
+        POSTGRES_DB: test-db
+        POSTGRES_USER: test-user
+        POSTGRES_PASSWORD: test-password
+      ports:
+        - "5432:5432"
+      volumes:
+        - postgres_data:/var/lib/postgresql/data/
+      container_name: db
+
+volumes:
+  postgres_data:
