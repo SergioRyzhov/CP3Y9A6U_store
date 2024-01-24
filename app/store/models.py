@@ -7,12 +7,11 @@ class CreditOrder(models.Model):
     )
 
     def __str__(self):
-        return str(self.id)
+        return f"{str(self.id)} {str(self.created_at)}"
 
 
 class Contract(models.Model):
     number = models.PositiveIntegerField(
-        max_length=255,
         unique=True,
     )
 
@@ -58,7 +57,7 @@ class Good(models.Model):
     credit_order = models.ForeignKey(
         CreditOrder,
         on_delete=models.CASCADE,
-        related_name='credit_order',
+        related_name='orders',
     )
 
     manufacturer = models.OneToOneField(
