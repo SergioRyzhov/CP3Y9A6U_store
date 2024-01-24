@@ -14,3 +14,50 @@ docker-compose -f docker-compose.yaml up -d
 ```
 docker-compose -f docker-compose.yaml down
 ```
+#### to init data
+```
+python manage.py loaddata fixtures.json
+```
+***
+
+## REST usage
+
+### endpoint to retrieve manufacturer IDs
+```
+GET 0.0.0.0:8000/store/manufacturers/1/
+```
+### endpoints to add extra data
+```
+json body
+{
+    "number": 123
+}
+
+POST 0.0.0.0:8000/store/contracts/
+```
+```
+json body
+{
+    "contract": 1
+}
+
+POST 0.0.0.0:8000/store/orders/
+```
+```
+json body
+{
+    "name": "manufacturer-1"
+}
+
+POST 0.0.0.0:8000/store/manufacturers/
+```
+```
+json body
+{
+    "name": "Product",
+    "credit_order": 1,
+    "manufacturer": 2
+}
+
+0.0.0.0:8000/store/products/
+```

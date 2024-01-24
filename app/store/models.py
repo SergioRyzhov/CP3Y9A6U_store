@@ -1,15 +1,6 @@
 from django.db import models
 
 
-class CreditOrder(models.Model):
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-    )
-
-    def __str__(self):
-        return f"{str(self.id)} {str(self.created_at)}"
-
-
 class Contract(models.Model):
     number = models.PositiveIntegerField(
         unique=True,
@@ -19,15 +10,24 @@ class Contract(models.Model):
         auto_now_add=True,
     )
 
-    credit_order = models.OneToOneField(
-        CreditOrder,
+    def __str__(self):
+        return f"{str(self.id)} {str(self.number)}"
+
+
+class CreditOrder(models.Model):
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    contract = models.OneToOneField(
+        Contract,
         on_delete=models.CASCADE,
         primary_key=True,
-        related_name='credit_order',
+        related_name='contract_id',
     )
 
     def __str__(self):
-        return f"{str(self.id)} {str(self.number)}"
+        return f"{str(self.contract)} {str(self.created_at)}"
 
 
 class Manufacturer(models.Model):
@@ -44,7 +44,7 @@ class Manufacturer(models.Model):
         return f"{str(self.id)} {self.name}"
 
 
-class Good(models.Model):
+class Product(models.Model):
     name = models.CharField(
         max_length=255,
         unique=True,
